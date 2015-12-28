@@ -34,9 +34,13 @@ module.exports =
       else
         @createTable(data)
 
+    # Redraws the table
+    redraw: ->
+      @table?.render()
+
     createTable: (data)->
       div = document.createElement("div")
-      # TODO try adding the div after generating the chart. It might show the loading more
+
       @html $ div
       @table = new Handsontable div,
         data: data

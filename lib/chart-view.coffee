@@ -41,6 +41,11 @@ module.exports =
 
       @chart = c3.generate(chartSpec)
 
+    # Redraws the chart
+    redraw: ->
+      null
+      # TODO make the chart resize when the pane is resized
+
     createChart: (data)->
       @chartDiv = document.createElement("div")
       @html $ @chartDiv
