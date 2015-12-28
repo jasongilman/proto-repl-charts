@@ -80,6 +80,9 @@ module.exports = ProtoReplCharts =
       pane = atom.workspace.paneForItem(item)
       @handleActivePaneItemChanged(pane, item)
 
+
+    # TODO if you close a chart view and then rerun the code then it doesn't reopen it.
+    # no exception occurs
     atom.workspace.onDidDestroyPaneItem (event)=>
       item = event.item
       pane = event.pane

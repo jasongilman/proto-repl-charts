@@ -18,10 +18,9 @@ module.exports =
     @content: ->
       @div class: 'proto-repl-charts-chart native-key-bindings', tabindex: -1
 
-    constructor: (@name, data) ->
+    constructor: (@name) ->
       super
       @showLoading()
-      @createChart()
 
     serialize: ->
       # TODO how should we do serialization
@@ -34,6 +33,9 @@ module.exports =
     display: (data)->
       if @chart
         @chart = @chart.destroy()
+      else
+        @chartDiv = document.createElement("div")
+        @html $ @chartDiv
 
       chartSpec =
         bindto: @chartDiv
@@ -43,13 +45,7 @@ module.exports =
 
     # Redraws the chart
     redraw: ->
-      null
-      # TODO make the chart resize when the pane is resized
-
-    createChart: (data)->
-      @chartDiv = document.createElement("div")
-      @html $ @chartDiv
-      @display(data)
+      @chart?.flush()
 
     getTitle: ->
       @name
