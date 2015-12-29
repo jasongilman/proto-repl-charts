@@ -69,6 +69,7 @@ module.exports = ProtoReplCharts =
       console.log("Unexpected data: " + data)
 
   activate: (state) ->
+    window.protoReplCharts = this
     @registerExtension()
 
     @subscriptions = new CompositeDisposable
@@ -80,9 +81,6 @@ module.exports = ProtoReplCharts =
       pane = atom.workspace.paneForItem(item)
       @handleActivePaneItemChanged(pane, item)
 
-
-    # TODO if you close a chart view and then rerun the code then it doesn't reopen it.
-    # no exception occurs
     atom.workspace.onDidDestroyPaneItem (event)=>
       item = event.item
       pane = event.pane
@@ -103,10 +101,11 @@ module.exports = ProtoReplCharts =
 
       return unless protocol == PROTOCOL
 
+      name = pathname.substr(1)
       if host == "chart"
-        new ChartView(pathname)
+        new ChartView(name)
       else if host == "table"
-        new TableView(pathname)
+        new TableView(name)
       else
         console.log("Unexpected host #{host} in #{uriToOpen}")
 
