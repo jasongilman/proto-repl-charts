@@ -35,7 +35,7 @@ module.exports = ProtoReplCharts =
     if pane
       if disposable = @paneResizeObservers[pane.id]
         disposable.dispose()
-        @paneResizeObservers[pane.id] = null
+        delete @paneResizeObservers[pane.id]
 
       if item instanceof ChartView || item instanceof TableView
         item.redraw()
@@ -46,9 +46,7 @@ module.exports = ProtoReplCharts =
   openNewView: (type, map, name, data)->
     previousActivePane = atom.workspace.getActivePane()
     atom.workspace.open("#{PROTOCOL}//#{type}/#{name}", split: 'right', searchAllPanes: true).done (view)=>
-      console.log(view)
       map[name] = view
-      view.renderHTML()
       view.display(data)
       previousActivePane.activate()
       pane = atom.workspace.paneForItem(view)
@@ -86,11 +84,11 @@ module.exports = ProtoReplCharts =
       pane = event.pane
       if item instanceof ChartView
         @handleActivePaneItemChanged(pane, null)
-        @chartViewsByName[item.name] = null
+        delete @chartViewsByName[item.name]
 
       if item instanceof TableView
         @handleActivePaneItemChanged(pane, null)
-        @tableViewsByName[item.name] = null
+        delete @tableViewsByName[item.name]
 
     atom.workspace.addOpener (uriToOpen) ->
       try

@@ -3,7 +3,6 @@ c3 = require 'c3'
 
 PROTOCOL = "proto-repl-charts:"
 
-
 module.exports =
   class ChartView extends ScrollView
     name: null
@@ -26,10 +25,6 @@ module.exports =
       # TODO how should we do serialization
       deserializer : 'ChartView'
 
-    # TODO is this required?  Get rid of it
-    renderHTML: ->
-      @showLoading()
-
     display: (data)->
       if @chart
         @chart = @chart.destroy()
@@ -49,10 +44,6 @@ module.exports =
 
     getTitle: ->
       @name
-
-    # TODO is this required? Get rid of duplication
-    getURI: ->
-      "#{PROTOCOL}//chart/#{@name}"
 
     showLoading: ->
       @html $$$ ->

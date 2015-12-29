@@ -22,11 +22,8 @@ module.exports =
 
     serialize: ->
       # TODO how should we do serialization
+      # It's not currently working.
       deserializer : 'TableView'
-
-    # TODO is this required?  Get rid of it
-    renderHTML: ->
-      @showLoading()
 
     display: (data)->
       if @table
@@ -77,10 +74,6 @@ module.exports =
 
     getTitle: ->
       @name
-
-    # TODO is this required? Get rid of duplication
-    getURI: ->
-      "#{PROTOCOL}//table/#{@name}"
 
     showLoading: ->
       @html $$$ ->
