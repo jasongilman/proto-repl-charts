@@ -26,16 +26,19 @@ module.exports =
       deserializer : 'TableView'
 
     display: (data)->
+      headers = data[0]
+      data = data.slice(1)
       if @table
         @table.loadData(data)
+        @table.updateSettings colHeaders: headers
       else
-        @createTable(data)
+        @createTable(headers, data)
 
     # Redraws the table
     redraw: ->
       @table?.render()
 
-    createTable: (data)->
+    createTable: (headers, data)->
       div = document.createElement("div")
 
       @html $ div
@@ -43,7 +46,7 @@ module.exports =
         data: data
         minSpareRows: 1
         rowHeaders: true
-        colHeaders: true
+        colHeaders: headers
 
         # Allow a right click menu in the table
         contextMenu: true
@@ -67,6 +70,9 @@ module.exports =
         # Allow manual moving of columns
         manualColumnMove: true
         manualRowMove: true
+
+        # Allow sorting columns
+        columnSorting: true
 
         # Highlight the current row
         currentRowClassName: 'currentRow'

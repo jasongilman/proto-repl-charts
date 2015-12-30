@@ -5,6 +5,8 @@ url = require 'url'
 
 PROTOCOL = "proto-repl-charts:"
 
+# TODO add more comments throughout this project
+
 module.exports = ProtoReplCharts =
   subscriptions: null
 
@@ -17,9 +19,6 @@ module.exports = ProtoReplCharts =
 
   # Boolean indicates if this extension has been registered with Proto REPL
   registeredExtension: false
-
-  # TODO figure out what should happen if this package is activated before the proto repl package.
-  # I think we might be able to resolve this by adding proto repl as a package dependency of this one.
 
   registerExtension: ->
     unless @registeredExtension
@@ -53,6 +52,9 @@ module.exports = ProtoReplCharts =
       @handleActivePaneItemChanged(pane, view)
 
   display: (data)->
+    # TODO add error handling. We should capture the error and display in the REPL
+    # We should display a message that there could be a problem with the format of
+    # the data being displayed.
     if data.type == "table"
       if view = @tableViewsByName[data.name]
         view.display(data.data)
@@ -67,7 +69,6 @@ module.exports = ProtoReplCharts =
       console.log("Unexpected data: " + data)
 
   activate: (state) ->
-    window.protoReplCharts = this
     @registerExtension()
 
     @subscriptions = new CompositeDisposable

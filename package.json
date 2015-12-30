@@ -5,13 +5,13 @@
   "description": "TODO A short description of your package",
   "keywords": [
   ],
-  "activationCommands": {
-    "atom-workspace": "proto-repl-charts:toggle"
-  },
   "repository": "https://github.com/atom/proto-repl-charts",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
+  },
+  "package-dependencies": {
+    "proto-repl": "latest"
   },
   "dependencies": {
     "atom-space-pen-views": "^2.0.5",

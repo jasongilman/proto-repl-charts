@@ -32,11 +32,8 @@ module.exports =
         @chartDiv = document.createElement("div")
         @html $ @chartDiv
 
-      chartSpec =
-        bindto: @chartDiv
-        data: data
-
-      @chart = c3.generate(chartSpec)
+      data["bindto"] = @chartDiv
+      @chart = c3.generate(data)
 
     # Redraws the chart
     redraw: ->
