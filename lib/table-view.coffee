@@ -21,8 +21,6 @@ module.exports =
       @showLoading()
 
     serialize: ->
-      # TODO how should we do serialization
-      # It's not currently working.
       deserializer : 'TableView'
 
     display: (data)->

@@ -22,7 +22,6 @@ module.exports =
       @showLoading()
 
     serialize: ->
-      # TODO how should we do serialization
       deserializer : 'ChartView'
 
     display: (data)->
