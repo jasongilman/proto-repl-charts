@@ -2,10 +2,17 @@
   "name": "proto-repl-charts",
   "main": "./lib/proto-repl-charts",
   "version": "0.0.0",
-  "description": "TODO A short description of your package",
+  "description": "Allows executing Clojure code to display charts in Atom",
   "keywords": [
+    "clojure",
+    "lisp",
+    "repl",
+    "interactive",
+    "graph",
+    "chart",
+    "visual"
   ],
-  "repository": "https://github.com/atom/proto-repl-charts",
+  "repository": "https://github.com/jasongilman/proto-repl-charts",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
