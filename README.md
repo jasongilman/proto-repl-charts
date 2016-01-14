@@ -2,8 +2,6 @@
 
 Proto REPL Charts is an Atom plugin that extends [Proto REPL](https://github.com/jasongilman/proto-repl) and allows you to display tables and graphs of results from executed Clojure Code.
 
-## Example
-
 Execute this in Proto REPL:
 
 ```Clojure
@@ -28,15 +26,15 @@ Execute this in Proto REPL:
 
 Proto REPL Charts are invoked from Clojure code run in Proto REPL. A very small Clojure library, proto-repl-charts, defines a namespace `prc` with functions for displaying different charts.
 
-1. Add proto-repl-charts as a dependency in your Clojure project.
+### 1. Add proto-repl-charts as a dependency in your Clojure project.
 
 Add `[proto-repl-charts "0.1.0"]` to your dependencies in your `project.clj` file.
 
 (Proto REPL comes with a default Clojure project. If you bring open a new Atom window for and start a REPL it will already have proto-repl-charts dependency loaded and available.)
 
-2. [Start the REPL in Proto REPL](https://github.com/jasongilman/proto-repl#usage) and wait for it to come up.
+### 2. [Start the REPL in Proto REPL](https://github.com/jasongilman/proto-repl#usage) and wait for it to come up.
 
-3. Execute one of the functions in the `prc` namespace. See the examples below for specific examples
+### 3. Execute one of the functions in the `prc` namespace. See the examples below.
 
 The `prc` chart functions are all of the form `(prc/<function-name> <tab-name> <series-map> <[options]>)`
 
