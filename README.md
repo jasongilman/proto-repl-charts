@@ -5,8 +5,6 @@ Proto REPL Charts is an Atom plugin that extends [Proto REPL](https://github.com
 Execute this in Proto REPL:
 
 ```Clojure
-(require 'prc)
-
 (prc/line-chart
  "Trigonometry"
  {"sin" (map #(Math/sin %) (range 0.0 6.0 0.2))

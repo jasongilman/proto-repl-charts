@@ -21,7 +21,7 @@
     "proto-repl": "latest"
   },
   "dependencies": {
-    "atom-space-pen-views": "^2.0.5",
-    "c3": "0.4.10"
+    "atom-space-pen-views": "2.2.0",
+    "c3": "git+https://github.com/masayuki0812/c3.git#98769492d07b6103bfc30a0254ccb1e1ec1cca50"
   }
 }
