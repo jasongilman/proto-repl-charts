@@ -20,14 +20,8 @@
   "package-dependencies": {
     "proto-repl": "latest"
   },
-  "bundled-dependencies": [
-    "c3"
-  ],
-  "bundledDependencies": [
-    "c3"
-  ],
   "dependencies": {
     "atom-space-pen-views": "2.2.0",
-    "c3": "git+https://github.com/masayuki0812/c3.git#98769492d07b6103bfc30a0254ccb1e1ec1cca50"
+    "jg-c3": "0.4.11-rc4-2"
   }
 }

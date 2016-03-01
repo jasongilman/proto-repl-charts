@@ -1,5 +1,5 @@
 {$, $$$, ScrollView}  = require 'atom-space-pen-views'
-c3 = require 'c3'
+c3 = require 'jg-c3'
 
 PROTOCOL = "proto-repl-charts:"
 
