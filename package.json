@@ -1,7 +1,7 @@
 {
   "name": "proto-repl-charts",
   "main": "./lib/proto-repl-charts",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Allows executing Clojure code to display charts in Atom",
   "keywords": [
     "clojure",
@@ -20,8 +20,12 @@
   "package-dependencies": {
     "proto-repl": "latest"
   },
-  "bundled-dependencies": ["c3"],
-  "bundledDependencies": ["c3"],
+  "bundled-dependencies": [
+    "c3"
+  ],
+  "bundledDependencies": [
+    "c3"
+  ],
   "dependencies": {
     "atom-space-pen-views": "2.2.0",
     "c3": "git+https://github.com/masayuki0812/c3.git#98769492d07b6103bfc30a0254ccb1e1ec1cca50"
