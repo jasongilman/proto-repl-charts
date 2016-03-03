@@ -9,3 +9,7 @@
 ## 0.1.3
 
 * Depending on fork of c3 with newer D3 dependency to fix windows installation issue.
+
+## 0.2.0
+
+* Fixed #4 - Added draggable bar to allow vertically resizing charts.

@@ -1,5 +1,6 @@
 {$, $$$, ScrollView}  = require 'atom-space-pen-views'
 c3 = require 'jg-c3'
+Resizable = require('resizable')
 
 PROTOCOL = "proto-repl-charts:"
 
@@ -8,6 +9,7 @@ module.exports =
     name: null
     chart: null
     chartDiv: null
+    resizable: null
 
     atom.deserializers.add(this)
 
@@ -32,7 +34,26 @@ module.exports =
         @html $ @chartDiv
 
       data["bindto"] = @chartDiv
+
       @chart = c3.generate(data)
+
+      # Allow resizing the chart area
+      @resizable = new Resizable @chartDiv,
+      	within: 'parent',
+      	handles: 's',
+      	threshold: 10
+
+      @resizable.on 'resize', =>
+        height = @chartDiv.style.height.replace("px","")
+        @chart.resize
+          height: new Number(height)
+
+      # Style the handle
+      handle = @resizable.handles.s
+      handle.classList.add("icon")
+      handle.classList.add("icon-three-bars")
+
+
 
     # Redraws the chart
     redraw: ->
