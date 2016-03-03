@@ -16,7 +16,8 @@ module.exports =
     @content: ->
       @div class: 'proto-repl-chart-table native-key-bindings', tabindex: -1
 
-    constructor: (@name) ->
+    constructor: (name) ->
+      @name = decodeURIComponent(name)
       super
       @showLoading()
 
