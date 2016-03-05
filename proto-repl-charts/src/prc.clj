@@ -14,6 +14,18 @@
     (throw (Exception.
             "Table input must be a sequence of sequences or a sequence of maps."))))
 
+(defn graph
+  "TODO"
+  [name graph-data]
+  [:proto-repl-code-execution-extension
+   "proto-repl-charts"
+   {:type "graph"
+    :name name
+    :data graph-data}])
+
+(comment
+ (graph "mygraph" {}))
+
 ;; TODO there's a limit on the amount of data that can be retrieved back from nRepl at a time
 ;; or the editor freezes. It appears to be a limitation of the underlying JavaScript library.
 ;; We could add a workaround for very large tables by writing the data to the file system

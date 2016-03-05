@@ -23,6 +23,7 @@
   "dependencies": {
     "atom-space-pen-views": "2.2.0",
     "jg-c3": "0.4.11-rc4-2",
-    "resizable": "1.1.1"
+    "resizable": "1.1.1",
+    "vis":"4.15.0"
   }
 }
