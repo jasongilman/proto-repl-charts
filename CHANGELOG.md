@@ -14,3 +14,7 @@
 
 * Fixed #4 - Added draggable bar to allow vertically resizing charts.
 * Fixed #5 and #3 - decoding the name after it has been passed into charts and table constructor.
+
+## 0.3.0
+
+* Add graph support (aka networks of nodes and images.)
