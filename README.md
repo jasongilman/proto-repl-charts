@@ -26,7 +26,9 @@ Proto REPL Charts are invoked from Clojure code run in Proto REPL. A very small 
 
 ### 1. Add proto-repl-charts as a dependency in your Clojure project.
 
-Add `[proto-repl-charts "0.1.0"]` to your dependencies in your `project.clj` file.
+Add
+[![Clojars Project](https://img.shields.io/clojars/v/proto-repl-charts.svg)](https://clojars.org/proto-repl-charts)
+ to your dependencies in your `project.clj` file.
 
 (Proto REPL comes with a default Clojure project. If you bring open a new Atom window for and start a REPL it will already have proto-repl-charts dependency loaded and available.)
 
