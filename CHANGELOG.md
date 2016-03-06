@@ -18,3 +18,7 @@
 ## 0.3.0
 
 * Add graph support (aka networks of nodes and images.)
+
+## 0.3.1
+
+* Updating README so that the proto-repl-charts clojure library version is correct.
