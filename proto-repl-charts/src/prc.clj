@@ -1,5 +1,6 @@
 (ns prc
-  "Defines functions that allow the display of charts or tables.")
+  "Defines functions that allow the display of charts or tables."
+  (:require [proto-repl-charts.graph :as g]))
 
 (defn- table-input->matrix
   "Converts table input into a sequence of sequences. Assumes table input is
@@ -16,15 +17,41 @@
 
 (defn graph
   "TODO"
-  [name graph-data]
-  [:proto-repl-code-execution-extension
-   "proto-repl-charts"
-   {:type "graph"
-    :name name
-    :data graph-data}])
+  ([name graph-data]
+   (graph name graph-data nil))
+  ([name graph-data options]
+   [:proto-repl-code-execution-extension
+    "proto-repl-charts"
+    {:type "graph"
+     :name name
+     :data (g/convert-graph-data-for-display graph-data options)}]))
 
 (comment
- (graph "mygraph" {}))
+ (graph "mygraph" {:nodes ["a" "b" "c"]
+                   :edges [["a" "b"]
+                           ["b" "c"]]})
+ (do
+  (require '[loom.graph :as lg])
+  (let [loom-graph (lg/graph [1 2] [3 4] [1 4] [5 4] [3 5])]
+    (graph "loom" loom-graph)))
+
+ (do
+  (require '[loom.graph :as lg])
+  (require '[loom.gen :as gen])
+  (let [loom-graph (lg/graph)
+        loom-graph (gen/gen-rand loom-graph 200 200)]
+    (graph "loom" loom-graph {:layout {:improvedLayout false}}))))
+ ;; TODO allow tooltip to be specified so more data can be shown.
+ ;; Add options for hideEdgesOnDrag and hideNodesonDrag
+ ;; Allow passing in any options in the map that will be passed along
+ ;; TODO need to add maps for nodes and edges so things like groups can work
+ ;; add loom support (is there a graph generator for testing?
+ ;; display graph of analyzed code
+
+ ;; make it a very lightweight wrapper. Provided _excellent_ documentation
+ ;; Change to allow a dark background so you can make visually appealing graphs
+ ;; like this one: http://visjs.org/examples/network/nodeStyles/groups.html
+
 
 ;; TODO there's a limit on the amount of data that can be retrieved back from nRepl at a time
 ;; or the editor freezes. It appears to be a limitation of the underlying JavaScript library.

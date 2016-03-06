@@ -3,7 +3,8 @@
   :url "https://github.com/jasongilman/proto-repl-charts"
   :license {:name "MIT"
             :url "https://opensource.org/licenses/MIT"}
-  :dependencies [[org.clojure/clojure "1.8.0"]]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [aysylu/loom "0.5.4"]]
 
   :profiles
   {:dev {:source-paths ["dev" "src" "test"]

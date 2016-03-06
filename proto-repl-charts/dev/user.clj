@@ -1,5 +1,6 @@
 (ns user
   (:require [clojure.tools.namespace.repl :as tnr]
+            [clojure.repl :refer :all]
             [prc]
             [proto]))
 
