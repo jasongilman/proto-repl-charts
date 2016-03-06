@@ -132,7 +132,7 @@ A simple map of nodes and edges can be provided to describe a graph.
                     [:d :a] [:f :c]]})
 ```
 
-![map graph](https://github.com/jasongilman/proto-repl-charts/raw/master/examples/map_graph.png)
+![map graph](https://github.com/jasongilman/proto-repl-charts/raw/master/examples/map_graph.png  =387x499)
 
 #### Loom Graphs
 
