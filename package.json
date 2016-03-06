@@ -1,7 +1,7 @@
 {
   "name": "proto-repl-charts",
   "main": "./lib/proto-repl-charts",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Allows executing Clojure code to display charts in Atom",
   "keywords": [
     "clojure",
@@ -24,6 +24,6 @@
     "atom-space-pen-views": "2.2.0",
     "jg-c3": "0.4.11-rc4-2",
     "resizable": "1.1.1",
-    "vis":"4.15.0"
+    "vis": "4.15.0"
   }
 }
