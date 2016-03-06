@@ -16,7 +16,18 @@
             "Table input must be a sequence of sequences or a sequence of maps."))))
 
 (defn graph
-  "TODO"
+  "Takes graph data representing nodes and edges and displays it in Atom using
+   vis.js. (http://http://visjs.org/).
+   Arguments:
+   * name - The name to put in the tab title. Will replace an existing tag with
+     the same name.
+   * graph-data - Can be a loom graph or a map containing a sequence of nodes and
+     edges. Nodes can be a sequence of identifiers (strings, numbers, keys) or
+     can be a map containing data matching description here:
+     http://visjs.org/docs/network/nodes.html. Edges can be a sequence of 2 item
+     sequences or maps containing any of the fields described here:
+     http://visjs.org/docs/network/edges.html
+   * options - Optional map of visjs network options. See http://visjs.org/docs/network/"
   ([name graph-data]
    (graph name graph-data nil))
   ([name graph-data options]
@@ -26,6 +37,7 @@
      :name name
      :data (g/convert-graph-data-for-display graph-data options)}]))
 
+;; Some graph examples.
 (comment
  (graph "mygraph" {:nodes ["a" "b" "c"]
                    :edges [["a" "b"]
@@ -41,22 +53,8 @@
   (let [loom-graph (lg/graph)
         loom-graph (gen/gen-rand loom-graph 200 200)]
     (graph "loom" loom-graph {:layout {:improvedLayout false}}))))
- ;; TODO allow tooltip to be specified so more data can be shown.
- ;; Add options for hideEdgesOnDrag and hideNodesonDrag
- ;; Allow passing in any options in the map that will be passed along
- ;; TODO need to add maps for nodes and edges so things like groups can work
- ;; add loom support (is there a graph generator for testing?
- ;; display graph of analyzed code
-
- ;; make it a very lightweight wrapper. Provided _excellent_ documentation
- ;; Change to allow a dark background so you can make visually appealing graphs
- ;; like this one: http://visjs.org/examples/network/nodeStyles/groups.html
 
 
-;; TODO there's a limit on the amount of data that can be retrieved back from nRepl at a time
-;; or the editor freezes. It appears to be a limitation of the underlying JavaScript library.
-;; We could add a workaround for very large tables by writing the data to the file system
-;; and then loading it in Atom.
 (defn table
   "Displays the data in a table in a tab with the given name. rows can either be
   a sequence of sequences or a sequence of maps."

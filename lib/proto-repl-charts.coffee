@@ -52,9 +52,6 @@ module.exports = ProtoReplCharts =
       @handleActivePaneItemChanged(pane, view)
 
   display: (data)->
-    # TODO add error handling. We should capture the error and display in the REPL
-    # We should display a message that there could be a problem with the format of
-    # the data being displayed.
     if data.type == "table"
       if view = @tableViewsByName[data.name]
         view.display(data.data)

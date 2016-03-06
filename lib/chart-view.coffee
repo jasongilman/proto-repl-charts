@@ -54,8 +54,6 @@ module.exports =
       handle.classList.add("icon")
       handle.classList.add("icon-three-bars")
 
-
-
     # Redraws the chart
     redraw: ->
       @chart?.flush()

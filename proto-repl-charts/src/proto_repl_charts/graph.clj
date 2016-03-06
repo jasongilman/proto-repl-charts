@@ -1,12 +1,9 @@
 (ns proto-repl-charts.graph
-  "TODO
-   graph display data is a map of nodes and edges
-   nodes are maps with :id and :label
-   edges are maps of :from and :to "
+  "Contains functions for converting a graphs into display data. Displayed graphs
+   are maps of nodes and edges. Nodes are maps with :id and :label. Edges are
+   maps of :from and :to."
   (:require [loom.graph :as lg]
             [clojure.string :as str]))
-
-;; TODO add unit tests
 
 (defn- error
   "Throws an exception containing a message joined from the msg-parts."
@@ -21,7 +18,7 @@
        "http://visjs.org/docs/network/edges.html."))
 
 (defn nodes->display-data
-  "TODO"
+  "Converts a sequence of nodes into nodes for display."
   [nodes]
   (when-not (or (set? nodes) (sequential? nodes))
     (error "Expected sequence of nodes." expected-msg))
@@ -31,7 +28,7 @@
     (mapv #(hash-map :id % :label %) nodes)))
 
 (defn edges->display-data
-  "TODO"
+  "Converts a sequence of edges into edges for display."
   [edges]
   (when-not (or (set? edges) (sequential? edges))
     (error "Expected sequence of edges." expected-msg))
@@ -45,9 +42,8 @@
     :else
     (error "Unexpected type for edges." (type (first edges)) expected-msg)))
 
-
-(defn- loom-graph->display-graph
-  "TODO"
+(defn loom-graph->display-graph
+  "Converts a loom graph to a display graph."
   [g]
   (let [nodes (nodes->display-data (lg/nodes g))
         edges (if (lg/directed? g)
@@ -59,7 +55,8 @@
    {:nodes nodes
     :edges edges}))
 
-(defn- map-graph->display-graph
+(defn map-graph->display-graph
+  "Converts a graph passed in as a map to a display graph."
   [mg]
   (when-not (contains? mg :nodes)
     (error "Missing key :nodes." expected-msg))
@@ -69,9 +66,8 @@
     {:nodes (nodes->display-data nodes)
      :edges (edges->display-data edges)}))
 
-;; TODO convert to multimethod. Allows extension
 (defn convert-graph-data-for-display
-  "TODO"
+  "Converts graph data into data for display by vis.js."
   [graph-data options]
   (cond
     (lg/graph? graph-data)

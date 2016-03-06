@@ -9,4 +9,7 @@
   :profiles
   {:dev {:source-paths ["dev" "src" "test"]
          :dependencies [[org.clojure/tools.namespace "0.2.11"]
-                        [proto-repl "0.1.2"]]}})
+                        [pjstadig/humane-test-output "0.7.1"]
+                        [proto-repl "0.1.2"]]
+         :injections [(require 'pjstadig.humane-test-output)
+                      (pjstadig.humane-test-output/activate!)]}})
