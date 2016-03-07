@@ -147,6 +147,34 @@ A simple map of nodes and edges can be provided to describe a graph.
   (prc/graph "Loom Graph" graph))
 ```
 
+#### Event Handling
+
+Proto REPL Charts supports subscribing to graph events. The events supported are listed [here with visjs documentation](http://visjs.org/docs/network/#Events). Pass a map of event types and handler function names with the options map argument. The function names must be fully scoped with namespace. The function will be invoked with the nodes and edges involved in the event.
+
+```Clojure
+(defn handle-double-click
+  [event-data]
+  (println (pr-str event-data))))
+
+(prc/graph "A Graph from a map"
+           {:nodes [:a :b :c]
+            :edges [[:a :b] [:a :c]]}
+           {:events {:doubleClick 'user/handle-double-click}})
+```
+
+Double clicking a node prints something like the following. Node click data includes the full data of the node that was clicked and the edges that connect to that node.
+
+```Clojure
+{:nodes [{:label "a", :id "a"}],
+ :edges [{:from "a",
+          :id "e2ca05c8-a5bf-4b3b-b8bc-fd619a6360e3",
+          :to "b"}
+         {:from "a",
+          :id "bd2191cf-1aae-449a-b13f-bb12e4ebaa7c",
+          :to "c"}]}
+```
+
+
 #### Full vis.js Customization
 
 The full customization power of vis.js is supported. See the [vis.js documentation](http://visjs.org/docs/network/) for information on [options](http://visjs.org/docs/network/), [nodes]( http://visjs.org/docs/network/nodes.html), or [edges](http://visjs.org/docs/network/edges.html).

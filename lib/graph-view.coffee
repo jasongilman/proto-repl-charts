@@ -45,8 +45,28 @@ module.exports =
         nodes: nodes,
         edges: edges
       options = data.options || {}
+
+      # Capture events that were passed. This is not a standard visjs key
+      events = options.events
+      delete options.events
+
         # configure: 'nodes,edges'
       @network = new vis.Network(@graphDiv, graphData, options);
+
+      # Handle any event handlers
+      if events
+        for event, handler of events
+          @network.on event, (eventData)->
+            dataToPass =
+              edges: (edges.get(id) for id in eventData.edges),
+              nodes: (nodes.get(id) for id in eventData.nodes),
+
+            code = "(#{handler} #{protoRepl.jsToEdn(dataToPass)})"
+            protoRepl.executeCode code,
+              displayInRepl: false,
+              resultHandler: (result)->
+                if result.error
+                  protoRepl.appendText("Failure to execute handler #{handler}: #{result.error}")
 
     # Redraws the graph
     redraw: ->

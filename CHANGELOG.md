@@ -22,3 +22,7 @@
 ## 0.3.1
 
 * Updating README so that the proto-repl-charts clojure library version is correct.
+
+## 0.3.2
+
+* Added event handling for reacting to graph events.
