@@ -2,13 +2,15 @@
   "Contains functions for converting a graphs into display data. Displayed graphs
    are maps of nodes and edges. Nodes are maps with :id and :label. Edges are
    maps of :from and :to."
-  (:require [loom.graph :as lg]
-            [clojure.string :as str]))
+  (:require [clojure.string :as str]))
 
 (defn- error
   "Throws an exception containing a message joined from the msg-parts."
   [& msg-parts]
-  (throw (Exception. (str/join " " msg-parts))))
+  (let [msg (str/join " " msg-parts)
+        ex #?(:clj (Exception. msg)
+              :cljs (js/Error msg))]
+   (throw ex)))
 
 (def ^:private expected-msg
   (str "Expecting loom graph or a map containing :nodes and :edges. Nodes can be "
@@ -42,19 +44,6 @@
     :else
     (error "Unexpected type for edges." (type (first edges)) expected-msg)))
 
-(defn loom-graph->display-graph
-  "Converts a loom graph to a display graph."
-  [g]
-  (let [nodes (nodes->display-data (lg/nodes g))
-        edges (if (lg/directed? g)
-                ;; TODO use arrows for a directed graph
-                (edges->display-data (lg/edges g))
-                ;; Non-directed graph. We don't want duplicate edges between nodes
-                ;; This will return edges twice for an undirected graph
-                (->> g lg/edges (mapv sort) (into #{}) edges->display-data))]
-   {:nodes nodes
-    :edges edges}))
-
 (defn map-graph->display-graph
   "Converts a graph passed in as a map to a display graph."
   [mg]
@@ -66,11 +55,33 @@
     {:nodes (nodes->display-data nodes)
      :edges (edges->display-data edges)}))
 
+#?(:clj
+   (require 'loom.graph))
+#?(:clj
+   (defn loom-graph->display-graph
+     "Converts a loom graph to a display graph."
+     [g]
+     (let [nodes (nodes->display-data (loom.graph/nodes g))
+           edges (if (loom.graph/directed? g)
+                   ;; TODO use arrows for a directed graph
+                   (edges->display-data (loom.graph/edges g))
+                   ;; Non-directed graph. We don't want duplicate edges between nodes
+                   ;; This will return edges twice for an undirected graph
+                   (->> g loom.graph/edges (mapv sort) (into #{}) edges->display-data))]
+      {:nodes nodes
+       :edges edges}))
+   :cljs (defn loom-graph->display-graph [g] g))
+
+(defn loom-graph?
+  [graph-data]
+  #?(:clj (loom.graph/graph? graph-data)
+     :cljs false))
+
 (defn convert-graph-data-for-display
   "Converts graph data into data for display by vis.js."
   [graph-data options]
   (cond
-    (lg/graph? graph-data)
+    (loom-graph? graph-data)
     (assoc (loom-graph->display-graph graph-data) :options options)
 
     (map? graph-data)

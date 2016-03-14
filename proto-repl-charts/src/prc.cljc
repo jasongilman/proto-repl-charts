@@ -2,6 +2,11 @@
   "Defines functions that allow the display of charts or tables."
   (:require [proto-repl-charts.graph :as g]))
 
+(defn error
+  [msg]
+  #?(:clj (Exception. msg)
+     :cljs (js/Error msg)))
+
 (defn- table-input->matrix
   "Converts table input into a sequence of sequences. Assumes table input is
   either already a sequence a sequences or a sequence of maps. Throws an exception
@@ -12,7 +17,7 @@
       (let [cols (keys (first table-input))]
         (cons cols (map #(map % cols) table-input)))
       table-input)
-    (throw (Exception.
+    (throw (error
             "Table input must be a sequence of sequences or a sequence of maps."))))
 
 (defn graph

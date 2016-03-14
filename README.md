@@ -26,11 +26,14 @@ Proto REPL Charts are invoked from Clojure code run in Proto REPL. A very small 
 
 ### 1. Add proto-repl-charts as a dependency in your Clojure project.
 
+(Not necessary for self hosted REPL. The dependency is already available.)
+
 Add
 [![Clojars Project](https://img.shields.io/clojars/v/proto-repl-charts.svg)](https://clojars.org/proto-repl-charts)
  to your dependencies in your `project.clj` file.
 
 (Proto REPL comes with a default Clojure project. If you bring open a new Atom window for and start a REPL it will already have proto-repl-charts dependency loaded and available.)
+
 
 ### 2. [Start the REPL in Proto REPL](https://github.com/jasongilman/proto-repl#usage) and wait for it to come up.
 
@@ -136,7 +139,7 @@ A simple map of nodes and edges can be provided to describe a graph.
 
 ![map graph](https://github.com/jasongilman/proto-repl-charts/raw/master/examples/map_graph.png)
 
-#### Loom Graphs
+#### Loom Graphs (Clojure Only currently)
 
 [Loom](https://github.com/aysylu/loom) graphs are supported as well.
 
@@ -152,6 +155,8 @@ A simple map of nodes and edges can be provided to describe a graph.
 Proto REPL Charts supports subscribing to graph events. The events supported are listed [here with visjs documentation](http://visjs.org/docs/network/#Events). Pass a map of event types and handler function names with the options map argument. The function names must be fully scoped with namespace. The function will be invoked with the nodes and edges involved in the event.
 
 ```Clojure
+(ns user)
+
 (defn handle-double-click
   [event-data]
   (println (pr-str event-data))))
