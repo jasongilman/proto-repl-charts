@@ -18,7 +18,7 @@
     margin-bottom: -5px !important;
   }
 }
-.proto-repl-charts-graph {
+.proto-repl-charts-network {
   width: 100%;
   height: 100%;
   background-color: white;
@@ -27,4 +27,14 @@
   div {
     height: 100%;
   }
+}
+.proto-repl-charts-graph {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  // vis.js puts a div within the container. It has no class or style and won't
+  // take up 100% of the height unless configured.
+  // div {
+  //   height: 100%;
+  // }
 }

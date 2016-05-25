@@ -20,6 +20,21 @@
     (throw (error
             "Table input must be a sequence of sequences or a sequence of maps."))))
 
+
+;; TODO for version 1.0
+;; - Rename prc to proto-repl-charts.core
+;; - Just use simple less wrapped functions like graph, network
+
+
+(defn custom-graph
+  "TODO"
+  [name items options]
+  [:proto-repl-code-execution-extension
+   "proto-repl-charts"
+   {:type "custom-graph"
+    :name name
+    :data {:items items :options options}}])
+
 (defn graph
   "Takes graph data representing nodes and edges and displays it in Atom using
    vis.js. (http://http://visjs.org/).

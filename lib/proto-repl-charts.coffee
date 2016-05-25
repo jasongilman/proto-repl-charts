@@ -1,6 +1,7 @@
 TableView = require './table-view'
 ChartView = require './chart-view'
 GraphView = require './graph-view'
+NetworkView = require './network-view'
 {CompositeDisposable} = require 'atom'
 url = require 'url'
 
@@ -13,6 +14,7 @@ module.exports = ProtoReplCharts =
   tableViewsByName: {}
   chartViewsByName: {}
   graphViewsByName: {}
+  networkViewsByName: {}
 
   # A map of panes ids to disposables of observers watching for the pane to be resized.
   paneResizeObservers: {}
@@ -63,6 +65,11 @@ module.exports = ProtoReplCharts =
       else
         @openNewView(data.type, @chartViewsByName, data.name, data.data)
     else if data.type == "graph"
+      if view = @networkViewsByName[data.name]
+        view.display(data.data)
+      else
+        @openNewView(data.type, @networkViewsByName, data.name, data.data)
+    else if data.type == "custom-graph"
       if view = @graphViewsByName[data.name]
         view.display(data.data)
       else
@@ -91,6 +98,9 @@ module.exports = ProtoReplCharts =
       else if item instanceof GraphView
         @handleActivePaneItemChanged(pane, null)
         delete @graphViewsByName[item.name]
+      else if item instanceof NetworkView
+        @handleActivePaneItemChanged(pane, null)
+        delete @networkViewsByName[item.name]
       else if item instanceof TableView
         @handleActivePaneItemChanged(pane, null)
         delete @tableViewsByName[item.name]
@@ -110,6 +120,8 @@ module.exports = ProtoReplCharts =
       else if host == "table"
         new TableView(name)
       else if host == "graph"
+        new NetworkView(name)
+      else if host == "custom-graph"
         new GraphView(name)
       else
         console.log("Unexpected host #{host} in #{uriToOpen}")

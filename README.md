@@ -106,6 +106,34 @@ Displays a custom chart in a tab with the given name. [C3](http://c3js.org/) is 
 
 ![custom chart](https://github.com/jasongilman/proto-repl-charts/raw/master/examples/custom_chart.png)
 
+### Custom Graph
+
+TODO figure out how to integrate this
+
+```Clojure
+(prc/custom-graph
+  "Points"
+  [{:x 1 :y 2}
+   {:x 3 :y 6}]
+  {:style :points
+   :sort false
+   :sampling false
+   :moveable true
+   :showMajorLabels false
+   :start 0
+   :max 10
+  ;  :height "100%"
+  ;  :graphHeight "100%"
+   :format {:majorLabels {:millisecond "x"}
+            :minorLabels {:millisecond "x"}}
+   :timeAxis {:scale "millisecond"}})
+(prc/custom-graph
+  "lines"
+  [{:x 1 :y 2}
+   {:x 3 :y 6}]
+  {})
+```
+
 ### Displaying a Table
 
 Proto REPL Charts can display a table of data that can be sorted by individual columns. The row data can either be a sequence of sequences or a sequence of maps.

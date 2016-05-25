@@ -25,4 +25,8 @@
 
 ## 0.3.2
 
-* Added event handling for reacting to graph events.
+* Added event handling for reacting to graph events
+
+## 0.4.0
+
+* TODO

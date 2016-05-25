@@ -6,7 +6,7 @@ PROTOCOL = "proto-repl-charts:"
 module.exports =
   class GraphView extends ScrollView
     name: null
-    network: null
+    graph2d: null
     graphDiv: null
 
     atom.deserializers.add(this)
@@ -26,47 +26,16 @@ module.exports =
       deserializer : 'GraphView'
 
     display: (data)->
-      if @network
-        @network = @network.destroy()
+      if @graph2d
+        @graph2d = @graph2d.destroy()
       else
         @graphDiv = document.createElement("div")
         @html $ @graphDiv
 
-      # create an array with nodes
-      # nodes should be objects with id and label
-      nodes = new vis.DataSet(data.nodes)
+      console.log data
+      dataset = new vis.DataSet(data.items)
 
-      #create an array with edges
-      # Edges should be objects from and to
-      edges = new vis.DataSet(data.edges)
-
-      #create a network
-      graphData =
-        nodes: nodes,
-        edges: edges
-      options = data.options || {}
-
-      # Capture events that were passed. This is not a standard visjs key
-      events = options.events
-      delete options.events
-
-        # configure: 'nodes,edges'
-      @network = new vis.Network(@graphDiv, graphData, options);
-
-      # Handle any event handlers
-      if events
-        for event, handler of events
-          @network.on event, (eventData)->
-            dataToPass =
-              edges: (edges.get(id) for id in eventData.edges),
-              nodes: (nodes.get(id) for id in eventData.nodes),
-
-            code = "(#{handler} #{protoRepl.jsToEdn(dataToPass)})"
-            protoRepl.executeCode code,
-              displayInRepl: false,
-              resultHandler: (result)->
-                if result.error
-                  protoRepl.appendText("Failure to execute handler #{handler}: #{result.error}")
+      @graph2d = new vis.Graph2d(@graphDiv, dataset, data.options);
 
     # Redraws the graph
     redraw: ->
