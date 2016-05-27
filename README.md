@@ -57,6 +57,14 @@ The `prc` chart functions are all of the form `(prc/<function-name> <tab-name> <
    {:labels input-values}))
 ```
 
+```Clojure
+(prc/canvas "TheCanvas"
+ [[:fillRect [50,50,120,120]]])
+(prc/canvas "TheCanvas"
+ [[:fillRect [5,5,12,12]]])
+```
+
+
 ![line chart](https://github.com/jasongilman/proto-repl-charts/raw/master/examples/line_chart.png)
 
 ### Displaying a Bar Chart

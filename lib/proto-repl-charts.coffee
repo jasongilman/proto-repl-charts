@@ -1,5 +1,6 @@
 TableView = require './table-view'
 ChartView = require './chart-view'
+CanvasView = require './canvas-view'
 GraphView = require './graph-view'
 {CompositeDisposable} = require 'atom'
 url = require 'url'
@@ -12,6 +13,7 @@ module.exports = ProtoReplCharts =
   # A map of views addressed by name.
   tableViewsByName: {}
   chartViewsByName: {}
+  canvasViewsByName: {}
   graphViewsByName: {}
 
   # A map of panes ids to disposables of observers watching for the pane to be resized.
@@ -62,6 +64,11 @@ module.exports = ProtoReplCharts =
         view.display(data.data)
       else
         @openNewView(data.type, @chartViewsByName, data.name, data.data)
+    else if data.type == "canvas"
+      if view = @canvasViewsByName[data.name]
+        view.display(data.data)
+      else
+        @openNewView(data.type, @canvasViewsByName, data.name, data.data)
     else if data.type == "graph"
       if view = @graphViewsByName[data.name]
         view.display(data.data)
@@ -88,6 +95,9 @@ module.exports = ProtoReplCharts =
       if item instanceof ChartView
         @handleActivePaneItemChanged(pane, null)
         delete @chartViewsByName[item.name]
+      if item instanceof CanvasView
+        @handleActivePaneItemChanged(pane, null)
+        delete @canvasViewsByName[item.name]
       else if item instanceof GraphView
         @handleActivePaneItemChanged(pane, null)
         delete @graphViewsByName[item.name]
@@ -107,6 +117,8 @@ module.exports = ProtoReplCharts =
       name = pathname.substr(1)
       if host == "chart"
         new ChartView(name)
+      else if host == "canvas"
+        new CanvasView(name)
       else if host == "table"
         new TableView(name)
       else if host == "graph"

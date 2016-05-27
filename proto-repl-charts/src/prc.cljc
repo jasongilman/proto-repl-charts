@@ -20,6 +20,15 @@
     (throw (error
             "Table input must be a sequence of sequences or a sequence of maps."))))
 
+(defn canvas
+  "TODO"
+  [name data]
+  [:proto-repl-code-execution-extension
+   "proto-repl-charts"
+   {:type "canvas"
+    :name name
+    :data data}])
+
 (defn graph
   "Takes graph data representing nodes and edges and displays it in Atom using
    vis.js. (http://http://visjs.org/).
