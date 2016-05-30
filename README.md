@@ -60,9 +60,20 @@ The `prc` chart functions are all of the form `(prc/<function-name> <tab-name> <
 ```Clojure
 (prc/canvas "TheCanvas"
  [[:fillRect [50,50,120,120]]])
-(prc/canvas "TheCanvas"
- [[:fillRect [5,5,12,12]]])
+
+
+(prc/canvas "Person"
+ [[:moveTo [50 20]]
+ ])
+
 ```
+
+# Canvas TODOs
+
+* Allow setting values
+* Allow getting values (need bidirectional proto repl communication)
+* Zero argument functions shouldn't require passing empty vector.
+
 
 
 ![line chart](https://github.com/jasongilman/proto-repl-charts/raw/master/examples/line_chart.png)

@@ -97,6 +97,7 @@ module.exports = ProtoReplCharts =
         delete @chartViewsByName[item.name]
       if item instanceof CanvasView
         @handleActivePaneItemChanged(pane, null)
+        @canvasViewsByName[item.name]?.deactivate()
         delete @canvasViewsByName[item.name]
       else if item instanceof GraphView
         @handleActivePaneItemChanged(pane, null)
