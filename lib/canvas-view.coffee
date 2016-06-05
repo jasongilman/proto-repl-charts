@@ -71,15 +71,5 @@ module.exports =
         console.log "Calling #{fnName} with #{args}"
         ctx[fnName].apply(ctx, args)
 
-
-    # Redraws the chart
-    redraw: ->
-      console.log("Resizing")
-      if @canvas
-        @canvas.style.height =  @parentDiv.clientHeight
-        @canvas.style.width = @parentDiv.clientWidth
-      else
-        console.log("No canvas")
-
     getTitle: ->
       @name
