@@ -56,6 +56,7 @@ module.exports =
               @canvas.getContext("2d").drawImage(canvasImg, 0, 0)
         1000)
 
+    # TODO doc string
     display: (commands)->
       unless @canvas
         @parentDiv = this[0]
@@ -67,9 +68,25 @@ module.exports =
 
       ctx = @canvas.getContext("2d")
 
+      ## TODO document the special commands
+      # Get, set, width, height
+
+      lastResponse = null
       for [fnName, args] in commands
         console.log "Calling #{fnName} with #{args}"
-        ctx[fnName].apply(ctx, args)
+        if fnName == "get"
+          console.log "Getting #{args[0]}"
+          lastResponse = ctx[args[0]]
+        else if fnName == "set"
+          console.log "Setting #{args[0]} to #{args[1]}"
+          ctx[args[0]] = args[1]
+        else if fnName == "width"
+          lastResponse = @canvas.width
+        else if fnName == "height"
+          lastResponse = @canvas.height
+        else
+          lastResponse = ctx[fnName].apply(ctx, args)
+      lastResponse
 
     getTitle: ->
       @name
