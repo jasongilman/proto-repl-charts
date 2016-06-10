@@ -17,7 +17,8 @@
 
 (defn draw-line
   [x1 y1 x2 y2]
-  (proto-repl.extension-comm/request
+  (proto-repl.extension-comm/send-command
+   proto-repl.extension-comm/saved-extension-comm-state
    "proto-repl-charts"
    {:type "canvas"
     :name "Test"
@@ -28,43 +29,41 @@
 
 (defn width
   []
-  (proto-repl.extension-comm/request-and-wait
+  (proto-repl.extension-comm/send-command
+   proto-repl.extension-comm/saved-extension-comm-state
    "proto-repl-charts"
    {:type "canvas"
     :name "Test"
-    :data [[:width]]}))
+    :data [[:width]]}
+   {:wait-for-response? true}))
 
 (defn height
   []
-  (proto-repl.extension-comm/request-and-wait
+  (proto-repl.extension-comm/send-command
+   proto-repl.extension-comm/saved-extension-comm-state
    "proto-repl-charts"
    {:type "canvas"
     :name "Test"
-    :data [[:height]]}))
+    :data [[:height]]}
+   {:wait-for-response? true}))
 
 
-(proto-repl.extension-comm/request-and-wait
+(proto-repl.extension-comm/send-command
+ proto-repl.extension-comm/saved-extension-comm-state
  "proto-repl-charts"
  {:type "canvas"
   :name "Test"
   ;; TODO figure out how to get things from the canvas itself and not the context
   ;; There are definitely times when we'll want either. Or maybe just width and height
   ;; as specific commands.
-  :data [[:get [:lineWidth]]]})
+  :data [[:get [:lineWidth]]]}
+ {:wait-for-response? true})
 
-
-
-
-(proto-repl.extension-comm/request-and-wait
- "proto-repl-charts"
- {:type "canvas"
-  :name "Test"
-  ;; TODO figure out how to set things from the canvas itself and not the context
-  :data [[:set [:lineWidth 20]]]})
 
 (defn clear
   []
-  (proto-repl.extension-comm/request
+  (proto-repl.extension-comm/send-command
+   proto-repl.extension-comm/saved-extension-comm-state
    "proto-repl-charts"
    {:type "canvas"
     :name "Test"
