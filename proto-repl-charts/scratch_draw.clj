@@ -18,7 +18,6 @@
 (defn draw-line
   [x1 y1 x2 y2]
   (proto-repl.extension-comm/send-command
-   proto-repl.extension-comm/saved-extension-comm-state
    "proto-repl-charts"
    {:type "canvas"
     :name "Test"
@@ -30,7 +29,6 @@
 (defn width
   []
   (proto-repl.extension-comm/send-command
-   proto-repl.extension-comm/saved-extension-comm-state
    "proto-repl-charts"
    {:type "canvas"
     :name "Test"
@@ -40,7 +38,6 @@
 (defn height
   []
   (proto-repl.extension-comm/send-command
-   proto-repl.extension-comm/saved-extension-comm-state
    "proto-repl-charts"
    {:type "canvas"
     :name "Test"
@@ -49,7 +46,6 @@
 
 
 (proto-repl.extension-comm/send-command
- proto-repl.extension-comm/saved-extension-comm-state
  "proto-repl-charts"
  {:type "canvas"
   :name "Test"
@@ -63,7 +59,6 @@
 (defn clear
   []
   (proto-repl.extension-comm/send-command
-   proto-repl.extension-comm/saved-extension-comm-state
    "proto-repl-charts"
    {:type "canvas"
     :name "Test"
