@@ -8,16 +8,15 @@
     (is (= {:nodes [{:label :a, :id :a} {:label :b, :id :b} {:label :c, :id :c}]
             :edges [{:from :a, :to :b} {:from :b, :to :c}]
             :options nil}
-           (g/convert-graph-data-for-display
+           (#'g/convert-graph-data-for-display
             {:nodes [:a :b :c]
              :edges [[:a :b] [:b :c]]}
             nil))))
   (testing "Loom graph"
     (let [graph (lg/graph [:a :b] [:b :c])
-          converted (g/convert-graph-data-for-display graph nil)
+          converted (#'g/convert-graph-data-for-display graph nil)
           {:keys [nodes edges]} converted]
       (is (= #{{:label :a, :id :a} {:label :b, :id :b} {:label :c, :id :c}}
              (set nodes)))
       (is (= #{{:from :a, :to :b} {:from :b, :to :c}}
              (set edges))))))
-      

@@ -19,7 +19,7 @@
        "or maps containing any of the fields described here: "
        "http://visjs.org/docs/network/edges.html."))
 
-(defn nodes->display-data
+(defn- nodes->display-data
   "Converts a sequence of nodes into nodes for display."
   [nodes]
   (when-not (or (set? nodes) (sequential? nodes))
@@ -29,7 +29,7 @@
     nodes
     (mapv #(hash-map :id % :label %) nodes)))
 
-(defn edges->display-data
+(defn- edges->display-data
   "Converts a sequence of edges into edges for display."
   [edges]
   (when-not (or (set? edges) (sequential? edges))
@@ -44,7 +44,7 @@
     :else
     (error "Unexpected type for edges." (type (first edges)) expected-msg)))
 
-(defn map-graph->display-graph
+(defn- map-graph->display-graph
   "Converts a graph passed in as a map to a display graph."
   [mg]
   (when-not (contains? mg :nodes)
@@ -58,7 +58,7 @@
 #?(:clj
    (require 'loom.graph))
 #?(:clj
-   (defn loom-graph->display-graph
+   (defn- loom-graph->display-graph
      "Converts a loom graph to a display graph."
      [g]
      (let [nodes (nodes->display-data (loom.graph/nodes g))
@@ -70,14 +70,14 @@
                    (->> g loom.graph/edges (mapv sort) (into #{}) edges->display-data))]
       {:nodes nodes
        :edges edges}))
-   :cljs (defn loom-graph->display-graph [g] g))
+   :cljs (defn- loom-graph->display-graph [g] g))
 
-(defn loom-graph?
+(defn- loom-graph?
   [graph-data]
   #?(:clj (loom.graph/graph? graph-data)
      :cljs false))
 
-(defn convert-graph-data-for-display
+(defn- convert-graph-data-for-display
   "Converts graph data into data for display by vis.js."
   [graph-data options]
   (cond
@@ -89,3 +89,43 @@
 
     :else
     (error "Unexpected graph data for display of type" (type graph-data) expected-msg)))
+
+
+(defn graph
+  "Takes graph data representing nodes and edges and displays it in Atom using
+   vis.js. (http://http://visjs.org/).
+   Arguments:
+   * name - The name to put in the tab title. Will replace an existing tag with
+     the same name.
+   * graph-data - Can be a loom graph or a map containing a sequence of nodes and
+     edges. Nodes can be a sequence of identifiers (strings, numbers, keys) or
+     can be a map containing data matching description here:
+     http://visjs.org/docs/network/nodes.html. Edges can be a sequence of 2 item
+     sequences or maps containing any of the fields described here:
+     http://visjs.org/docs/network/edges.html
+   * options - Optional map of visjs network options. See http://visjs.org/docs/network/"
+  ([name graph-data]
+   (graph name graph-data nil))
+  ([name graph-data options]
+   [:proto-repl-code-execution-extension
+    "proto-repl-charts"
+    {:type "graph"
+     :name name
+     :data (convert-graph-data-for-display graph-data options)}]))
+
+;; Some graph examples.
+(comment
+ (graph "mygraph" {:nodes ["a" "b" "c"]
+                   :edges [["a" "b"]
+                           ["b" "c"]]})
+ (do
+  (require '[loom.graph :as lg])
+  (let [loom-graph (lg/graph [1 2] [3 4] [1 4] [5 4] [3 5])]
+    (graph "loom" loom-graph)))
+
+ (do
+  (require '[loom.graph :as lg])
+  (require '[loom.gen :as gen])
+  (let [loom-graph (lg/graph)
+        loom-graph (gen/gen-rand loom-graph 200 200)]
+    (graph "loom" loom-graph {:layout {:improvedLayout false}}))))

@@ -5,7 +5,7 @@ Proto REPL Charts is an Atom plugin that extends [Proto REPL](https://github.com
 Execute this in Proto REPL:
 
 ```Clojure
-(prc/line-chart
+(proto-repl-charts.charts/line-chart
  "Trigonometry"
  {"sin" (map #(Math/sin %) (range 0.0 6.0 0.2))
   "cos" (map #(Math/cos %) (range 0.0 6.0 0.2))})
@@ -50,7 +50,7 @@ The `prc` chart functions are all of the form `(prc/<function-name> <tab-name> <
 
 ```Clojure
 (let [input-values (range 0.0 6.0 0.5)]
-  (prc/line-chart
+  (proto-repl-charts.charts/line-chart
    "Trigonometry"
    {"sin" (map #(Math/sin %) input-values)
     "cos" (map #(Math/cos %) input-values)}
@@ -81,7 +81,7 @@ The `prc` chart functions are all of the form `(prc/<function-name> <tab-name> <
 ### Displaying a Bar Chart
 
 ```Clojure
-(prc/bar-chart
+(proto-repl-charts.charts/bar-chart
   "GDP_By_Year"
   {"2013" [16768 9469 4919 3731]
    "2014" [17418 10380 4616 3859]}
@@ -94,7 +94,7 @@ The `prc` chart functions are all of the form `(prc/<function-name> <tab-name> <
 
 ```Clojure
 (let [tlr (java.util.concurrent.ThreadLocalRandom/current)]
-  (prc/scatter-chart
+  (proto-repl-charts.charts/scatter-chart
    "Randoms"
    {:gaussian (repeatedly 200 #(.nextGaussian tlr))
     :uniform  (repeatedly 200 #(.nextDouble tlr))}))
@@ -107,7 +107,7 @@ The `prc` chart functions are all of the form `(prc/<function-name> <tab-name> <
 Displays a custom chart in a tab with the given name. [C3](http://c3js.org/) is the charting library used. The chart config will be converted from Clojure to a JavaScript object and passed to C3. It can be any configuration data C3 supports. See [C3 examples](http://c3js.org/examples.html) for more.
 
 ```Clojure
-(prc/custom-chart
+(proto-repl-charts.charts/custom-chart
   "Custom"
   {:data {:columns
           [["data1" 30 20 50 40 60 50]
@@ -130,7 +130,7 @@ Displays a custom chart in a tab with the given name. [C3](http://c3js.org/) is 
 Proto REPL Charts can display a table of data that can be sorted by individual columns. The row data can either be a sequence of sequences or a sequence of maps.
 
 ```Clojure
-(prc/table
+(proto-repl-charts.table/table
   "Users"
   [{:name "Jane" :age 24 :favorite-color :blue}
    {:name "Matt" :age 28 :favorite-color :red}
@@ -150,10 +150,11 @@ Graphs of networks of nodes and edges can be displayed using the `prc/graph` fun
 A simple map of nodes and edges can be provided to describe a graph.
 
 ```Clojure
-(prc/graph "A Graph from a map"
-           {:nodes [:a :b :c :d :e :f :g]
-            :edges [[:d :b] [:b :c] [:d :c] [:e :f] [:f :g]
-                    [:d :a] [:f :c]]})
+(proto-repl-charts.graph/graph
+  "A Graph from a map"
+  {:nodes [:a :b :c :d :e :f :g]
+   :edges [[:d :b] [:b :c] [:d :c] [:e :f] [:f :g]
+           [:d :a] [:f :c]]})
 ```
 
 ![map graph](https://github.com/jasongilman/proto-repl-charts/raw/master/examples/map_graph.png)
@@ -166,7 +167,7 @@ A simple map of nodes and edges can be provided to describe a graph.
 (require '[loom.graph :as lg])
 (let [graph (lg/graph [1 0] [2 0] [4 0] [3 4] [5 4] [10 4] [9 10] [11 10]
                       [15 10] [17 15] [15 16] [7 0] [6 7] [8 6])]
-  (prc/graph "Loom Graph" graph))
+  (proto-repl-charts.graph/graph "Loom Graph" graph))
 ```
 
 #### Event Handling
@@ -180,10 +181,11 @@ Proto REPL Charts supports subscribing to graph events. The events supported are
   [event-data]
   (println (pr-str event-data))))
 
-(prc/graph "A Graph from a map"
-           {:nodes [:a :b :c]
-            :edges [[:a :b] [:a :c]]}
-           {:events {:doubleClick 'user/handle-double-click}})
+(proto-repl-charts.graph/graph
+  "A Graph from a map"
+  {:nodes [:a :b :c]
+   :edges [[:a :b] [:a :c]]}
+  {:events {:doubleClick 'user/handle-double-click}})
 ```
 
 Double clicking a node prints something like the following. Node click data includes the full data of the node that was clicked and the edges that connect to that node.
@@ -241,12 +243,13 @@ This is a [groups example](http://visjs.org/examples/network/nodeStyles/groups.h
              [10 4] [13 12] [14 13] [13 0] [16 15] [17 15] [15 10] [19 18]
              [20 19] [19 4] [22 21] [23 22] [22 13] [25 24] [26 25] [25 7]
              [28 27] [29 28] [28 0]]]
-  (prc/graph "Custom Graph"
-             {:nodes nodes :edges edges}
-             ;; Options
-             {:nodes {:shape "dot" :size 30 :font {:size 32 :color "#111111"}
-                      :borderWidth 2}
-              :edges {:width 2}}))
+  (proto-repl-charts.graph/graph
+    "Custom Graph"
+    {:nodes nodes :edges edges}
+    ;; Options
+    {:nodes {:shape "dot" :size 30 :font {:size 32 :color "#111111"}
+             :borderWidth 2}
+     :edges {:width 2}}))
 ```
 
 ![custom graph](https://github.com/jasongilman/proto-repl-charts/raw/master/examples/custom_graph.png)
