@@ -44,7 +44,6 @@
     :data [[:height]]}
    {:wait-for-response? true}))
 
-
 (proto-repl.extension-comm/send-command
  "proto-repl-charts"
  {:type "canvas"

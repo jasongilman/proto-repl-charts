@@ -1,4 +1,5 @@
-(ns proto-repl-charts.charts)
+(ns proto-repl-charts.charts
+  "Defines functions for displaying charts.")
 
 (defn custom-chart
   "Displays a custom chart in a tab with the given name. [C3](http://c3js.org/)

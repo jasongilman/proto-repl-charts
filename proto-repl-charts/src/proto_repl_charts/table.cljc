@@ -1,4 +1,5 @@
-(ns proto-repl-charts.table)
+(ns proto-repl-charts.table
+  "Defines functions for displaying data in a table.")
 
 (defn error
   [msg]

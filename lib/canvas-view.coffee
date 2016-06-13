@@ -72,18 +72,22 @@ module.exports =
       # Get, set, width, height
 
       lastResponse = null
-      for [fnName, args] in commands
-        console.log "Calling #{fnName} with #{args}"
+      for command in commands
+        fnName = command.shift()
+        args = command
+        # console.log "Calling #{fnName} with #{args}"
+
+        # Special Handlers
         if fnName == "get"
-          console.log "Getting #{args[0]}"
           lastResponse = ctx[args[0]]
         else if fnName == "set"
-          console.log "Setting #{args[0]} to #{args[1]}"
           ctx[args[0]] = args[1]
         else if fnName == "width"
           lastResponse = @canvas.width
         else if fnName == "height"
           lastResponse = @canvas.height
+
+        # Catch all
         else
           lastResponse = ctx[fnName].apply(ctx, args)
       lastResponse
