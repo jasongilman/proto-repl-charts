@@ -3,9 +3,6 @@
    draw function for details."
   (require [proto-repl.extension-comm :as c]))
 
-;; TODO document how to use it in README.
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Functions that generate data that can be drawn.
 

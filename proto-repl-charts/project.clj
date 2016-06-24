@@ -6,6 +6,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [aysylu/loom "0.5.4"]]
 
+  :plugins [[lein-codox "0.9.5"]]
+
   :profiles
   {:dev {:source-paths ["dev" "src" "test"]
          :dependencies [[org.clojure/tools.namespace "0.2.11"]

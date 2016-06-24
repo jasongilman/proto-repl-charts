@@ -3,9 +3,7 @@
 PROTOCOL = "proto-repl-charts:"
 
 module.exports =
-  # TODO document class
   class CanvasView extends ScrollView
-    # TODO document fields
     name: null
     canvas: null
     parentDiv: null
