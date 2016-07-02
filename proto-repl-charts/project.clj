@@ -6,7 +6,10 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [aysylu/loom "0.5.4"]]
 
+  ;; Documentation can be generated with `lein codox`
   :plugins [[lein-codox "0.9.5"]]
+  :codox {:output-path "doc"
+          :source-paths ["src"]}
 
   :profiles
   {:dev {:source-paths ["dev" "src" "test"]
