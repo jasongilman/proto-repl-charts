@@ -186,7 +186,7 @@ See code in [src/proto_repl_charts/examples/canvas/l_system.clj](https://github.
 
 ### Rotating a Polygon
 
-See code in [src/proto_repl_charts/examples/canvas/rotating_polygon.clj](https://github.com/jasongilman/proto-repl-charts/blob/master/proto-repl-charts/src/proto_repl_charts/examples/canvas/rotating_polygon.clj])
+See code in [src/proto_repl_charts/examples/canvas/rotating_polygon.clj](https://github.com/jasongilman/proto-repl-charts/blob/master/proto-repl-charts/src/proto_repl_charts/examples/canvas/rotating_polygon.clj)
 
 The following code draws 11,200 triangles that are rotated around the origin with a radius that's varying using a sine function. The lines of the polygon are translucent so the overlapping lines create a pattern
 
