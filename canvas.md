@@ -2,17 +2,17 @@
 
 [API Docs](http://jasongilman.github.io/proto-repl-charts/proto-repl-charts.canvas.html)
 
-Proto REPL Charts supports building more complex visualizations by drawing on an HTML canvas embedded withing Atom.
+Proto REPL Charts supports building more complex visualizations by drawing on an HTML canvas element embedded within Atom.
 
 ## Using this new feature
 
 If you're already using Atom and Proto REPL make sure you do the following to take advantage of this feature:
 
-* Upgrade to or install the latest version of proto-repl and proto-repl-charts in Atom.
-* Update your project.clj dependencies:
+- Upgrade to or install the latest version of proto-repl and proto-repl-charts in Atom.
+- Update your project.clj dependencies:
   * [![Clojars Project](https://img.shields.io/clojars/v/proto-repl-charts.svg)](https://clojars.org/proto-repl-charts)
   * [![Clojars Project](https://img.shields.io/clojars/v/proto-repl.svg)](https://clojars.org/proto-repl)
-* Restart Atom
+- Restart Atom
 
 ## proto-repl-charts.canvas draw Function
 
