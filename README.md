@@ -133,4 +133,8 @@ See [Graphs](https://github.com/jasongilman/proto-repl-charts/blob/master/graphs
 
 ### Drawing on a Canvas
 
-TODO
+Proto REPL Charts supports building more complex visualizations by drawing on an HTML canvas embedded within Atom using the `proto-repl-charts.canvas/draw` function.
+
+See [Canvas](https://github.com/jasongilman/proto-repl-charts/blob/master/canvas.md) for details.
+
+![Canvas Dragon Curve](https://github.com/jasongilman/proto-repl-charts/raw/master/examples/canvas_dragon.png)
