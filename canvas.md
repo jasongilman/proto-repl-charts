@@ -4,6 +4,16 @@
 
 Proto REPL Charts supports building more complex visualizations by drawing on an HTML canvas embedded withing Atom.
 
+## Using this new feature
+
+If you're already using Atom and Proto REPL make sure you do the following to take advantage of this feature:
+
+* Upgrade to or install the latest version of proto-repl and proto-repl-charts in Atom.
+* Update your project.clj dependencies:
+  * [![Clojars Project](https://img.shields.io/clojars/v/proto-repl-charts.svg)](https://clojars.org/proto-repl-charts)
+  * [![Clojars Project](https://img.shields.io/clojars/v/proto-repl.svg)](https://clojars.org/proto-repl)
+* Restart Atom
+
 ## proto-repl-charts.canvas draw Function
 
 The draw function is the main interaction point for drawing. It opens a new canvas with the given name or updates an existing canvas with the same name. `draw` is a wrapper over the JavaScript API for the canvas 2d context.
