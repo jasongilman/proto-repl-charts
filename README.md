@@ -1,5 +1,7 @@
 # proto-repl-charts package
 
+[API Docs](http://jasongilman.github.io/proto-repl-charts/index.html)
+
 Proto REPL Charts is an Atom plugin that extends [Proto REPL](https://github.com/jasongilman/proto-repl) and allows you to display tables and graphs of results from executed Clojure Code.
 
 Execute this in Proto REPL:
@@ -33,7 +35,6 @@ Add
  to your dependencies in your `project.clj` file.
 
 (Proto REPL comes with a default Clojure project. If you bring open a new Atom window for and start a REPL it will already have proto-repl-charts dependency loaded and available.)
-
 
 ### 2. [Start the REPL in Proto REPL](https://github.com/jasongilman/proto-repl#usage) and wait for it to come up.
 

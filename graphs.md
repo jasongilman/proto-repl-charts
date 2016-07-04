@@ -1,5 +1,7 @@
 # Proto REPL Charts Graphs
 
+[API Docs](http://jasongilman.github.io/proto-repl-charts/proto-repl-charts.graph.html)
+
 Graphs of networks of nodes and edges can be displayed using the `prc/graph` function. Graphs are displayed using [vis.js](http://visjs.org/) networks.
 
 ## Simple Maps of Nodes and Edges

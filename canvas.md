@@ -1,5 +1,7 @@
 # Proto REPL Charts Canvas
 
+[API Docs](http://jasongilman.github.io/proto-repl-charts/proto-repl-charts.canvas.html)
+
 Proto REPL Charts supports building more complex visualizations by drawing on an HTML canvas embedded withing Atom.
 
 ## proto-repl-charts.canvas draw Function
