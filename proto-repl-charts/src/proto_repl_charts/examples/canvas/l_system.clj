@@ -59,6 +59,16 @@
           turtle
           commands))
 
+(defn random
+  "Chooses a value between min and max"
+  [^double minv ^double maxv]
+  (+ (rand (- maxv minv)) minv))
+
+(defn value-with-chaos
+  "Returns a value adjusted by a certain amount of randomness."
+  ^double [^double chaos ^double v]
+  (+ v (random (* -1.0 v chaos) (* v chaos))))
+
 (defn forward
   "Moves turtle forward the specified distance."
   [turtle ^double distance]
@@ -119,17 +129,17 @@ Options:
 
    * x - initial x location on canvas
    * y - initial y location on canvas
-   * start-direction - start direction in degreese
+   * start-direction - start direction in degrees. Defaults to 0
    * operations - A map of l-system items to commands to run on the turtle"
   [options]
   {:pre [(every? #(contains? options %)
-                 [:start :depth :rules :canvas-name :x :y :start-direction :operations])]}
+                 [:start :depth :rules :canvas-name :x :y :operations])]}
   (let [;; l-system options
         {:keys [start depth rules]} options
         expanded (expand-l-system rules depth start)
         ;; turtle options
         {:keys [x y start-direction operations]} options
-        turtle (run-turtle (new-turtle x y start-direction)
+        turtle (run-turtle (new-turtle x y (or start-direction 0))
                            operations
                            expanded)
         turtle-moves (finalize-moves turtle)
@@ -140,17 +150,45 @@ Options:
               [(c/clear-rect) turtle-moves]
               [turtle-moves]))))
 
+
 (comment
- (draw-fractal
-  {:canvas-name "sierpinski-triangle"
-   :x 50.0
-   :y 250.0
-   :start-direction 0
-   :start "a"
-   :depth 8
-   :rules {\a "b-a-b"
-           \b "a+b+a"}
-   :operations {\a #(forward % 1)
-                \b #(forward % 1)
-                \- #(rotate % (Math/toRadians -60.0))
-                \+ #(rotate % (Math/toRadians 60.0))}}))
+ (let [distance 5
+       distance-chaos 0.75
+       angle (Math/toRadians 22)
+       neg-angle (* -1.0 angle)
+       angle-chaos 0.01]
+   (draw-fractal
+    {:canvas-name "tree"
+     :start-direction 90
+     :x 300.0
+     :y 700.0
+     :start "F"
+     :depth 5
+     :rules {\F "C0FF-[C1-F+F+F]+[C2+F-F-F]"}
+     :operations {\F #(forward % (value-with-chaos distance-chaos distance))
+                  \[ start-branch
+                  \] end-branch
+                  \- #(rotate % (* -1 (value-with-chaos angle-chaos angle)))
+                  \+ #(rotate % (value-with-chaos angle-chaos angle))}})))
+
+(comment
+ (let [distance 30
+       distance-chaos 0.75
+       angle (Math/toRadians 20)
+       neg-angle (* -1.0 angle)
+       angle-chaos 0.02]
+   (draw-fractal
+    {:canvas-name "split tree"
+     :start-direction 90
+     :x 300.0
+     :y 600.0
+     :start "F"
+     :depth 7
+     :rules {\F "X[-F][++F]-"}
+             ; \X "XX"}
+     :operations {\F #(forward % 5)
+                  \X #(forward % distance)
+                  \[ start-branch
+                  \] end-branch
+                  \- #(rotate % angle)
+                  \+ #(rotate % neg-angle)}})))

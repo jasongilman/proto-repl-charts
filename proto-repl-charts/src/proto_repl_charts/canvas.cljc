@@ -31,6 +31,19 @@
    [:lineTo x2 y2]
    [:stroke]])
 
+(defn stroke-polygon
+  "Returns a commands set to draw a polygon connecting the given points. points
+   is a vector of tuples of x and y for each point."
+  [points]
+  (let [[start-x start-y] (first points)]
+    (concat
+     [[:beginPath]
+      [:moveTo start-x start-y]]
+     (for [[x y] (rest points)]
+       [:lineTo x y])
+     [[:closePath]
+      [:stroke]])))
+
 (defn stroke-circle
   "Returns a command set to draw the outline of a circle."
   [x y radius]
@@ -85,6 +98,35 @@
   [[:set :strokeStyle str]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Functions for impacting the coordinate system through transformations
+
+(defn transform-reset
+  "Returns a command set to resets the transformations using the identity matrix"
+  []
+  [[:setTransform 1 0 0 1 0 0]])
+
+(defn rotate
+  "Returns a command set to add a rotation to the transformation matrix. angle
+   is expressed in radians."
+  [angle]
+  [[:rotate angle]])
+
+(defn scale
+  "Returns a command set to add a scaling transformation to the canvas units by x
+   horizontally and by y vertically. If one argument is provided they're both
+   scaled evenly."
+  ([size]
+   (scale size size))
+  ([x y]
+   [[:scale x y]]))
+
+(defn translate
+  "Returns a command set to add a translation transformation by moving the canvas
+   and its origin x horizontally and y vertically."
+  [x y]
+  [[:translate x y]])
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Side effecting drawing functions.
 
 (defn- partition-command-sets
@@ -92,6 +134,10 @@
    won't be sent at any one time."
   [command-sets]
   (partition-all 100 (apply concat command-sets)))
+
+
+;; TODO add verification of command sets. They should all be of the form
+;; [[[:keyword args] [:keyword args]] [[:keyword args]]]
 
 (defn draw
   "Opens a new canvas with the given name or updates an existing canvas with the
@@ -178,11 +224,13 @@
    {:wait-for-response? true}))
 
 (defn width
-  "Returns the width of the named canvas."
+  "Returns the width of the named canvas. Note the canvas must have been previously
+   opened for this to work."
   [name]
   (request name [:width]))
 
 (defn height
-  "Returns the height of the named canvas."
+  "Returns the height of the named canvas. Note the canvas must have been previously
+   opened for this to work."
   [name]
   (request name [:height]))
