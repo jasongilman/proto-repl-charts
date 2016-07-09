@@ -2,15 +2,8 @@
   "Contains functions for converting a graphs into display data. Displayed graphs
    are maps of nodes and edges. Nodes are maps with :id and :label. Edges are
    maps of :from and :to."
-  (:require [clojure.string :as str]))
-
-(defn- error
-  "Throws an exception containing a message joined from the msg-parts."
-  [& msg-parts]
-  (let [msg (str/join " " msg-parts)
-        ex #?(:clj (Exception. msg)
-              :cljs (js/Error msg))]
-   (throw ex)))
+  (:require [clojure.string :as str]
+            [proto-repl-charts.util :as u]))
 
 (def ^:private expected-msg
   (str "Expecting loom graph or a map containing :nodes and :edges. Nodes can be "
@@ -23,7 +16,7 @@
   "Converts a sequence of nodes into nodes for display."
   [nodes]
   (when-not (or (set? nodes) (sequential? nodes))
-    (error "Expected sequence of nodes." expected-msg))
+    (u/error "Expected sequence of nodes." expected-msg))
 
   (if (map? (first nodes))
     nodes
@@ -33,7 +26,7 @@
   "Converts a sequence of edges into edges for display."
   [edges]
   (when-not (or (set? edges) (sequential? edges))
-    (error "Expected sequence of edges." expected-msg))
+    (u/error "Expected sequence of edges." expected-msg))
   (cond
     (map? (first edges))
     edges
@@ -42,15 +35,15 @@
     (mapv #(hash-map :from (first %) :to (second %)) edges)
 
     :else
-    (error "Unexpected type for edges." (type (first edges)) expected-msg)))
+    (u/error "Unexpected type for edges." (type (first edges)) expected-msg)))
 
 (defn- map-graph->display-graph
   "Converts a graph passed in as a map to a display graph."
   [mg]
   (when-not (contains? mg :nodes)
-    (error "Missing key :nodes." expected-msg))
+    (u/error "Missing key :nodes." expected-msg))
   (when-not (contains? mg :edges)
-    (error "Missing key :edges." expected-msg))
+    (u/error "Missing key :edges." expected-msg))
   (let [{:keys [nodes edges]} mg]
     {:nodes (nodes->display-data nodes)
      :edges (edges->display-data edges)}))
@@ -63,7 +56,6 @@
      [g]
      (let [nodes (nodes->display-data (loom.graph/nodes g))
            edges (if (loom.graph/directed? g)
-                   ;; TODO use arrows for a directed graph
                    (edges->display-data (loom.graph/edges g))
                    ;; Non-directed graph. We don't want duplicate edges between nodes
                    ;; This will return edges twice for an undirected graph
@@ -88,7 +80,7 @@
     (assoc (map-graph->display-graph graph-data) :options options)
 
     :else
-    (error "Unexpected graph data for display of type" (type graph-data) expected-msg)))
+    (u/error "Unexpected graph data for display of type" (type graph-data) expected-msg)))
 
 
 (defn graph

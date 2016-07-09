@@ -54,7 +54,6 @@ module.exports =
               @canvas.getContext("2d").drawImage(canvasImg, 0, 0)
         1000)
 
-    # TODO doc string
     display: (commands)->
       unless @canvas
         @parentDiv = this[0]
@@ -65,9 +64,6 @@ module.exports =
         @autoResizeCanvas()
 
       ctx = @canvas.getContext("2d")
-
-      ## TODO document the special commands
-      # Get, set, width, height
 
       lastResponse = null
       for command in commands

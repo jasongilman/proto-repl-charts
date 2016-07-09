@@ -4,8 +4,6 @@
             [proto-repl-charts.table :as t]
             [proto-repl-charts.charts :as c]))
 
-;; TODO retest everything here.
-
 (defn graph
   "Deprecated. See proto-repl-charts.graph/graph"
   ([name graph-data]

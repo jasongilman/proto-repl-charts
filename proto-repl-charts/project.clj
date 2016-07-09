@@ -1,4 +1,4 @@
-(defproject proto-repl-charts "0.3.0"
+(defproject proto-repl-charts "0.3.1"
   :description "Defines helper functions for displaying graphs and tables in Proto REPL."
   :url "https://github.com/jasongilman/proto-repl-charts"
   :license {:name "MIT"
@@ -15,6 +15,6 @@
   {:dev {:source-paths ["dev" "src" "test"]
          :dependencies [[org.clojure/tools.namespace "0.2.11"]
                         [pjstadig/humane-test-output "0.7.1"]
-                        [proto-repl "0.2.0"]]
+                        [proto-repl "0.2.1"]]
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]}})

@@ -150,26 +150,26 @@ Options:
               [(c/clear-rect) turtle-moves]
               [turtle-moves]))))
 
-
 (comment
- (let [distance 5
-       distance-chaos 0.75
-       angle (Math/toRadians 22)
-       neg-angle (* -1.0 angle)
-       angle-chaos 0.01]
-   (draw-fractal
-    {:canvas-name "tree"
-     :start-direction 90
-     :x 300.0
-     :y 700.0
-     :start "F"
-     :depth 5
-     :rules {\F "C0FF-[C1-F+F+F]+[C2+F-F-F]"}
-     :operations {\F #(forward % (value-with-chaos distance-chaos distance))
-                  \[ start-branch
-                  \] end-branch
-                  \- #(rotate % (* -1 (value-with-chaos angle-chaos angle)))
-                  \+ #(rotate % (value-with-chaos angle-chaos angle))}})))
+ (time
+  (let [distance 5
+        distance-chaos 0.75
+        angle (Math/toRadians 22)
+        neg-angle (* -1.0 angle)
+        angle-chaos 0.01]
+    (draw-fractal
+     {:canvas-name "tree"
+      :start-direction 90
+      :x 300.0
+      :y 700.0
+      :start "F"
+      :depth 5
+      :rules {\F "C0FF-[C1-F+F+F]+[C2+F-F-F]"}
+      :operations {\F #(forward % (value-with-chaos distance-chaos distance))
+                   \[ start-branch
+                   \] end-branch
+                   \- #(rotate % (* -1 (value-with-chaos angle-chaos angle)))
+                   \+ #(rotate % (value-with-chaos angle-chaos angle))}}))))
 
 (comment
  (let [distance 30

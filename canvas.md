@@ -25,24 +25,28 @@ Draw takes a sequence of commands that instruct it what to draw. There are funct
 This code would draw a thick black line over top of an outlined red circle.
 
 ```Clojure
-(require '[proto-repl-charts.canvas :refer :all])
+(require '[proto-repl-charts.canvas :as c])
 
-(draw "Black Line and Red Circle"
-     [(clear-rect)
-      (stroke-style "red")
-      (line-width 1)
-      (stroke-circle 200 300 70)
+(c/draw "Black Line and Red Circle"
+        [(c/clear-rect)
+         (c/stroke-style "red")
+         (c/line-width 1)
+         (c/stroke-circle 200 300 70)
 
-      (stroke-style "black")
-      (line-width 5)
-      (line 100 200 400 400)])
+         (c/stroke-style "black")
+         (c/line-width 5)
+         (c/line 100 200 400 400)])
 ```
 
 ### Low Level API
 
-Draw takes a sequence of command sets. A command set is a sequence of commands. A command is a vector containing the keyword identifying the function to call on the Canvas 2d context along with the arguments that function takes.
+Draw takes the name of the drawing and any of the following:
 
-An example command is `[:fillRect 10 10 100 100]` which is equivalent to the JavaScript `ctx.fillRect(10, 10, 100, 100);` This would draw a filled in rectangle from the upper left point 10,10 that's 100 pixels tall and 100 pixels wide.
+* a command
+* a sequence of commands (also called a command set)
+* a sequence of command sets
+
+A command is a vector containing the keyword identifying the function to call on the Canvas 2d context along with the arguments that function takes. An example command is `[:fillRect 10 10 100 100]` which is equivalent to the JavaScript `ctx.fillRect(10, 10, 100, 100);` This would draw a filled in rectangle from the upper left point 10,10 that's 100 pixels tall and 100 pixels wide.
 
 The following link is a good reference for the functions available on the 2d context: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
 
@@ -51,11 +55,11 @@ Example:
 This code will draw a line from the point 1,1 to 100,100
 
 ```Clojure
-(draw "Simple Line"
- [[[:beginPath]
-   [:moveTo 1 1]
-   [:lineTo 100 100]
-   [:stroke]]])
+(c/draw "Simple Line"
+        [[:beginPath]
+         [:moveTo 1 1]
+         [:lineTo 100 100]
+         [:stroke]])
 ```
 
 That's equivalent to this JavaScript code.
@@ -176,8 +180,8 @@ See code in [src/proto_repl_charts/examples/canvas/l_system.clj](https://github.
    :depth 5
    :rules {\F "C0FF-[C1-F+F+F]+[C2+F-F-F]"}
    :operations {\F #(f/forward % (f/value-with-chaos distance-chaos distance))
-                \[ start-branch
-                \] end-branch
+                \[ f/start-branch
+                \] f/end-branch
                 \- #(f/rotate % (* -1 (f/value-with-chaos angle-chaos angle)))
                 \+ #(f/rotate % (f/value-with-chaos angle-chaos angle))}}))
 ```

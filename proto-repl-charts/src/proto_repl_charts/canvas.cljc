@@ -1,7 +1,8 @@
 (ns proto-repl-charts.canvas
   "Defines functions for opening and drawing to an HTML canvas in Atom. See the
    draw function for details."
-  (require [proto-repl.extension-comm :as c]))
+  (require [proto-repl.extension-comm :as c]
+           [proto-repl-charts.util :as u]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Functions that generate data that can be drawn.
@@ -129,15 +130,69 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Side effecting drawing functions.
 
+(def command-set-error-msg
+  (str "Command set does not appear to be valid. Accepts command sets in the "
+       "one of the following syntaxes:\n"
+       "[:command 1 2 3] - a single command\n"
+       "[[:command 1 2 3]] - a list of commands (a command set)\n"
+       "[[[:command 1 2 3]]] - a list of command sets"))
+
+(defn- clean-command-sets
+  "Takes drawing commands in a variety of styles and converts it to a command set."
+  [command-sets]
+  (if (sequential? command-sets)
+    (cond
+      (keyword? (first command-sets))
+      [[command-sets]]
+
+      (keyword? (ffirst command-sets))
+      [command-sets]
+
+      (keyword? (first (ffirst command-sets)))
+      command-sets
+
+      :else
+      (u/error command-set-error-msg))
+    (u/error command-set-error-msg)))
+
+(defn- valid-command-arg?
+  "Returns true if the argument is valid for a command."
+  [arg]
+  (or (keyword? arg)
+      (number? arg)
+      (string? arg)
+      (true? arg)
+      (false? arg)
+      (nil? arg)))
+
+(defn- validate-command
+  "Validates the command. If its valid then it returns the command. If it's
+  invalid throws an error"
+  [command]
+  (if (and (sequential? command)
+           (keyword? (first command))
+           (every? valid-command-arg? (drop 1 command)))
+    command
+    (u/error "Received invalid command:"
+             (pr-str command)
+             (str "A command must be a sequence starting with a keyword and "
+                  "followed by arguments of a keyword, number, string, boolean,"
+                  " or nil. Example: [:command :one 2 \"three\"]"))))
+
+(def partition-command-sets-xducer
+  "A transducer that concatenates together command sets, validates them, and
+   then splits the command set into sets of 100 commands to send at a time to
+   GUI side for drawing."
+  (comp
+   cat
+   (map validate-command)
+   (partition-all 100)))
+
 (defn- partition-command-sets
   "Partitions the sets of commands into evenly sized sets so that too much data
    won't be sent at any one time."
   [command-sets]
-  (partition-all 100 (apply concat command-sets)))
-
-
-;; TODO add verification of command sets. They should all be of the form
-;; [[[:keyword args] [:keyword args]] [[:keyword args]]]
+  (sequence partition-command-sets-xducer command-sets))
 
 (defn draw
   "Opens a new canvas with the given name or updates an existing canvas with the
@@ -164,11 +219,15 @@
 
    ## Low Level API
 
-   Draw takes a sequence of command sets. A command set is a sequence of commands.
-   A command is a vector containing the keyword identifying the function to call
-   on the Canvas 2d context along with the arguments that function takes.
+   Draw takes any of the following:
 
-   An example command is `[:fillRect 10 10 100 100]` which is equivalent to the
+   * a command
+   * a sequence of commands (also called a command set)
+   * a sequence of command sets
+
+   A command is a vector containing the keyword identifying the function to call
+   on the Canvas 2d context along with the arguments that function takes. An
+   example command is `[:fillRect 10 10 100 100]` which is equivalent to the
    JavaScript `ctx.fillRect(10, 10, 100, 100);` This would draw a filled in
    rectangle from the upper left point 10,10 that's 100 pixels tall and 100
    pixels wide.
@@ -181,10 +240,10 @@
     This code will draw a line from the point 1,1 to 100,100
 
     (draw \"Simple Line\")
-     [[[:beginPath]
+      [[:beginPath]
        [:moveTo 1 1]
        [:lineTo 100 100]
-       [:stroke]]])
+       [:stroke]])
 
     That's equivalent to this JavaScript code.
 
@@ -201,7 +260,7 @@
   ([name]
    (draw name []))
   ([name command-sets]
-   (doseq [command-set (partition-command-sets command-sets)]
+   (doseq [command-set (partition-command-sets (clean-command-sets command-sets))]
      (c/send-command
       "proto-repl-charts"
       {:type "canvas"
