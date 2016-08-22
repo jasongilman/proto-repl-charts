@@ -1,5 +1,5 @@
 (ns proto-repl-charts.util
-  (require [clojure.string :as str]))
+  (:require [clojure.string :as str]))
 
 (defn error
   "Throws an exception containing a message joined from the msg-parts."
