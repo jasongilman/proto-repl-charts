@@ -1,6 +1,6 @@
 (ns proto-repl-charts.table
   "Defines functions for displaying data in a table."
-  (require [proto-repl-charts.util :as u]))
+  (:require [proto-repl-charts.util :as u]))
 
 (defn- table-input->matrix
   "Converts table input into a sequence of sequences. Assumes table input is

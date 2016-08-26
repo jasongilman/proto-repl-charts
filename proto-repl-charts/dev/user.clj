@@ -2,7 +2,7 @@
   (:require [clojure.tools.namespace.repl :as tnr]
             [clojure.repl :refer :all]
             [prc]
-            [proto]))
+            [proto-repl.saved-values]))
 
 (defn start
   [])

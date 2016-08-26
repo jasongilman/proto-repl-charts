@@ -1,5 +1,5 @@
 (ns proto-repl-charts.examples.canvas.rotating-polygon
-  (require [proto-repl-charts.canvas :as c]))
+  (:require [proto-repl-charts.canvas :as c]))
 
 (def ^:const ^:private ^:double TAU
   "2 PI - aka a complete circle in radians"

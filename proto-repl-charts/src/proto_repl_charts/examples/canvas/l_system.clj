@@ -1,7 +1,7 @@
 (ns proto-repl-charts.examples.canvas.l-system
   "This provides an example of drawing on the canvas using Lindenmayer Systems
    aka L-systems. Based on https://brehaut.net/blog/2011/l_systems"
-  (require [proto-repl-charts.canvas :as c]))
+  (:require [proto-repl-charts.canvas :as c]))
 
 (defn expand-l-system
   "Expands the sequence of items using the given production rules.

@@ -1,7 +1,7 @@
 (ns proto-repl-charts.canvas
   "Defines functions for opening and drawing to an HTML canvas in Atom. See the
    draw function for details."
-  (require [proto-repl.extension-comm :as c]
+  (:require [proto-repl.extension-comm :as c]
            [proto-repl-charts.util :as u]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
