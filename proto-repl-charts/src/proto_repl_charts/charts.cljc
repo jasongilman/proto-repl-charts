@@ -7,11 +7,15 @@
   to a JavaScript object and passed to C3. It can be any configuration data C3
   supports."
   [name chart-config]
-  [:proto-repl-code-execution-extension
-   "proto-repl-charts"
-   {:type "chart"
-    :name name
-    :data chart-config}])
+  ;; TODO temporary presentation change
+  (let [new-chart-config (merge {:legend {:position :inset}
+                                 :padding {:top 20 :left 100 :bottom 20}}
+                                chart-config)]
+    [:proto-repl-code-execution-extension
+     "proto-repl-charts"
+     {:type "chart"
+      :name name
+      :data new-chart-config}]))
 
 (defn- process-options
   "Processes the options modifying the chart as necessary."

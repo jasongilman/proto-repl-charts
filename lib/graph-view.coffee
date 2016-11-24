@@ -26,6 +26,7 @@ module.exports =
       deserializer : 'GraphView'
 
     display: (data)->
+      console.log("Trying to display data", data)
       if @network
         @network = @network.destroy()
       else
@@ -62,11 +63,12 @@ module.exports =
               nodes: (nodes.get(id) for id in eventData.nodes),
 
             code = "(#{handler} #{protoRepl.jsToEdn(dataToPass)})"
-            protoRepl.executeCode code,
+            window.protoRepl.executeCode code,
               displayInRepl: false,
               resultHandler: (result)->
                 if result.error
-                  protoRepl.appendText("Failure to execute handler #{handler}: #{result.error}")
+                  console.error result.error
+                  window.protoRepl.stderr("Failure to execute handler #{handler}: #{result.error}")
 
     # Redraws the graph
     redraw: ->
