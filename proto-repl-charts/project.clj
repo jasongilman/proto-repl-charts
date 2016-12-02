@@ -1,4 +1,4 @@
-(defproject proto-repl-charts "0.3.1"
+(defproject proto-repl-charts "0.3.2"
   :description "Defines helper functions for displaying graphs and tables in Proto REPL."
   :url "https://github.com/jasongilman/proto-repl-charts"
   :license {:name "MIT"

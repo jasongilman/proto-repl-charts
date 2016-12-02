@@ -28,6 +28,10 @@
   (when-not (or (set? edges) (sequential? edges))
     (u/error "Expected sequence of edges." expected-msg))
   (cond
+    ;; Allows displaying a graph with no edges.
+    (empty? edges)
+    edges
+
     (map? (first edges))
     edges
 
