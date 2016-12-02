@@ -66,7 +66,8 @@ module.exports =
               displayInRepl: false,
               resultHandler: (result)->
                 if result.error
-                  protoRepl.appendText("Failure to execute handler #{handler}: #{result.error}")
+                  console.error("Failure to execute handler #{handler}: #{result.error}")
+                  window.protoRepl.stderr("Failure to execute handler #{handler}: #{result.error}")
 
     # Redraws the graph
     redraw: ->
