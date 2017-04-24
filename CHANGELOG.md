@@ -1,4 +1,4 @@
-## 0.3.3
+## 0.4.1
 
 * Fixed #15 - Changed call to .done to .then
 
