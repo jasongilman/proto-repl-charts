@@ -46,12 +46,13 @@ module.exports = ProtoReplCharts =
 
   openNewView: (type, map, name, data)->
     previousActivePane = atom.workspace.getActivePane()
-    atom.workspace.open("#{PROTOCOL}//#{type}/#{name}", split: 'right', searchAllPanes: true).done (view)=>
+    atom.workspace.open("#{PROTOCOL}//#{type}/#{name}", split: 'right', searchAllPanes: true).then((view)=>
       map[name] = view
       view.display(data)
       previousActivePane.activate()
       pane = atom.workspace.paneForItem(view)
       @handleActivePaneItemChanged(pane, view)
+    ).catch((err) => console.error(err))
 
   display: (data)->
     if data.type == "table"
